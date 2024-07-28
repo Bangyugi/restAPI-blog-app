@@ -49,12 +49,13 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "parent_id")
-    private Post parentPost;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "parentPost", cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<Post> childPost;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "related_post",
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "related_post_id")
+    )
+    private List<Post> relatedPost;
 }
