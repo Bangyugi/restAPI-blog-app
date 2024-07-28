@@ -46,15 +46,13 @@ public class PostServiceImpl implements PostService {
 
         post = postRepository.save(post);
 
-        List<Post> childPosts = new ArrayList<>();
-        for(String childPostId: request.getChildPostId()){
+        List<Post> relatedPosts = new ArrayList<>();
+        for(String childPostId: request.getRelatedPost()){
             Post childPost = postRepository.findById(childPostId).orElseThrow(() -> new ResourceNotFoundException("Post", "id", childPostId));
-            childPost.setParentPost(post);
-            childPosts.add(childPost);
+            relatedPosts.add(childPost);
         }
-        postRepository.saveAll(childPosts);
 
-        post.setChildPost(childPosts);
+        post.setRelatedPost(relatedPosts);
         return modelMapper.map(postRepository.save(post), PostResponse.class);
     }
 

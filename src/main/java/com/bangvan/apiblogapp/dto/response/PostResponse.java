@@ -35,5 +35,5 @@ public class PostResponse {
 
     private Set<Category>categories;
 
-    private List<Post> childPost;
+    private List<Post> relatedPost;
 }

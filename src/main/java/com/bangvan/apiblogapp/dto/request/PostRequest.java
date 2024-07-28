@@ -29,5 +29,5 @@ public class PostRequest {
     private String content;
     private String userId;
     private Set<String> categoryName;
-    private List<String> childPostId;
+    private List<String> relatedPost;
 }
