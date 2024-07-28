@@ -1,5 +1,6 @@
 package com.bangvan.apiblogapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,7 +33,7 @@ public class Post {
     private LocalDateTime updateAt;
     private String content;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -44,13 +45,16 @@ public class Post {
     )
     private Set<Category> categories;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "parent_id")
     private Post parentPost;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "parentPost", cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Post> childPost;
 }
