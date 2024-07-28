@@ -42,7 +42,7 @@ public class RoleServiceImpl implements RoleService {
     public String deleteRoleById(String id){
         Role role = roleRepository.findById(id).orElseThrow(() ->new ResourceNotFoundException("Role", "id", id));
         roleRepository.delete(role);
-        return "Role is deleted successfully";
+        return "Role with id: " + id + "was deleted successfully";
 
     }
 }

@@ -30,13 +30,13 @@ public class RoleController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<APIResponse> updateUserById(@PathVariable String id, @Valid  @RequestBody RoleRequest request){
+    public ResponseEntity<APIResponse> updateRoleById(@PathVariable String id, @Valid  @RequestBody RoleRequest request){
         APIResponse apiResponse = APIResponse.success(roleService.updateRoleById(id, request));
         return new ResponseEntity<>(apiResponse,HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<APIResponse> DeleteUserById (@PathVariable String id){
+    public ResponseEntity<APIResponse> deleteRoleById (@PathVariable String id){
         APIResponse apiResponse = APIResponse.success(roleService.deleteRoleById(id));
         return new ResponseEntity<>(apiResponse,HttpStatus.OK);
     }
