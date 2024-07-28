@@ -50,7 +50,7 @@ public class CategoryServiceImpl implements CategoryService {
     public String deleteCategory(String id){
         Category category = categoryRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Category", "id", id));
         categoryRepository.delete(category);
-        return "Category with id: " + id + "was deleted successfully";
+        return "Category with id: " + id + " was deleted successfully";
     }
 
 }
