@@ -44,7 +44,6 @@ public class PostServiceImpl implements PostService {
         }
         post.setCategories(categories);
 
-        post = postRepository.save(post);
 
         List<Post> relatedPosts = new ArrayList<>();
         for(String childPostId: request.getRelatedPost()){
@@ -73,6 +72,22 @@ public class PostServiceImpl implements PostService {
     public PostResponse updatePostById(String id, PostRequest request) {
         Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
         modelMapper.map(request, post);
+        Set<Category> categories = new HashSet<>();
+        for(String categoryName: request.getCategoryName())
+        {
+            Category category = categoryRepository.findByName(categoryName).orElseThrow(()->new ResourceNotFoundException("Category", "category's name",categoryName));
+            categories.add(category);
+        }
+        post.setCategories(categories);
+
+
+        List<Post> relatedPosts = new ArrayList<>();
+        for(String childPostId: request.getRelatedPost()){
+            Post childPost = postRepository.findById(childPostId).orElseThrow(() -> new ResourceNotFoundException("Post", "id", childPostId));
+            relatedPosts.add(childPost);
+        }
+
+        post.setRelatedPost(relatedPosts);
         postRepository.save(post);
         return modelMapper.map(post, PostResponse.class);
     }
