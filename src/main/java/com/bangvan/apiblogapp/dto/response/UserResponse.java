@@ -1,5 +1,7 @@
-package com.bangvan.apiblogapp.entity;
+package com.bangvan.apiblogapp.dto.response;
 
+import com.bangvan.apiblogapp.entity.Post;
+import com.bangvan.apiblogapp.entity.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,11 +15,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "users")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+public class UserResponse {
     private String id;
     private String username;
     private String email;
@@ -32,14 +30,5 @@ public class User {
     private String instagram;
     private String spotify;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Post> posts;
-
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinTable(
-            name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private Set<Role> roles;
+    private Set<RoleResponse> roles;
 }
