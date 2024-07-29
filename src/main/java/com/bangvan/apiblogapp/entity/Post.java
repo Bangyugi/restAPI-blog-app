@@ -37,6 +37,7 @@ public class Post {
     @JoinColumn(name = "user_id")
     private User user;
 
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(
             name = "post_category",
