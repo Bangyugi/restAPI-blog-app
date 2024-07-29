@@ -6,6 +6,7 @@ import com.bangvan.apiblogapp.entity.User;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,11 +24,15 @@ import java.util.Set;
 @AllArgsConstructor
 public class PostRequest {
     private String bannerURL;
+    @NotNull(message = "Post's title is required!")
     private String title;
     private String summary;
     private String publicationStatus;
+    @NotNull(message = "Post's content is required!")
     private String content;
+    @NotNull(message = "Post's author is required!")
     private String userId;
+    @NotNull(message = "Post's category is required!")
     private Set<String> categoryName;
     private List<String> relatedPost;
 }

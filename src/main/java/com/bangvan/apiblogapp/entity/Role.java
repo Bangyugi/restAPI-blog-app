@@ -24,7 +24,7 @@ public class Role {
     private String description;
 
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToMany( cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "role_id"),
