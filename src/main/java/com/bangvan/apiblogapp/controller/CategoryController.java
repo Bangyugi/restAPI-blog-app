@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class CategoryController {
     private final CategoryService categoryService;
 
+    @PreAuthorize("hasRole({'USER','ADMIN'})")
     @PostMapping()
     public ResponseEntity<APIResponse> addCategory(@Valid @RequestBody CategoryRequest request){
         APIResponse apiResponse = APIResponse.success(categoryService.addCategory(request));
@@ -35,12 +37,14 @@ public class CategoryController {
         return new ResponseEntity<>(apiResponse,HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<APIResponse> updateCategoryById(@PathVariable String id,@Valid @RequestBody CategoryRequest request){
         APIResponse apiResponse = APIResponse.success(categoryService.updateCategory(id, request));
         return new ResponseEntity<>(apiResponse,HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<APIResponse> deleteCategoryById (@PathVariable String id){
         APIResponse apiResponse = APIResponse.success(categoryService.deleteCategory(id));

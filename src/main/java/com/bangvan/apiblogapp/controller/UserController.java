@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserService userService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping()
     public ResponseEntity<APIResponse> addUser(@Valid @RequestBody RegisterRequest request)
     {
@@ -25,6 +27,7 @@ public class UserController {
         return new ResponseEntity<>(apiResponse,HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping()
     public ResponseEntity<APIResponse> getAllUser (){
         APIResponse apiResponse = APIResponse.success(userService.getAllUser());
@@ -32,17 +35,19 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<APIResponse> getUserById(@PathVariable String id){
+    public ResponseEntity<APIResponse> getUserById(@PathVariable String id) {
         APIResponse apiResponse = APIResponse.success(userService.getUserById(id));
         return new ResponseEntity<>(apiResponse,HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<APIResponse> updateUserById(@PathVariable String id,@Valid @RequestBody UserRequest request){
         APIResponse apiResponse = APIResponse.success(userService.updateUserById(id, request));
         return new ResponseEntity<>(apiResponse,HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<APIResponse> deleteUserById (@PathVariable String id){
         APIResponse apiResponse = APIResponse.success(userService.deleteUserById(id));
