@@ -51,12 +51,13 @@ public class Post {
     private List<Comment> comments;
 
 
-    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "related_post",
             joinColumns = @JoinColumn(name = "post_id"),
             inverseJoinColumns = @JoinColumn(name = "related_post_id")
     )
-    private List<Post> relatedPost;
+    private Set<Post> relatedPost;
+
+
 }

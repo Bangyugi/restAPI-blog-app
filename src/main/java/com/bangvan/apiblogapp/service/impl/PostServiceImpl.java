@@ -45,7 +45,7 @@ public class PostServiceImpl implements PostService {
         post.setCategories(categories);
 
 
-        List<Post> relatedPosts = new ArrayList<>();
+        Set<Post> relatedPosts = new HashSet<>();
         for(String childPostId: request.getRelatedPost()){
             Post childPost = postRepository.findById(childPostId).orElseThrow(() -> new ResourceNotFoundException("Post", "id", childPostId));
             relatedPosts.add(childPost);
@@ -81,7 +81,7 @@ public class PostServiceImpl implements PostService {
         post.setCategories(categories);
 
 
-        List<Post> relatedPosts = new ArrayList<>();
+        Set<Post> relatedPosts = new HashSet<>();
         for(String childPostId: request.getRelatedPost()){
             Post childPost = postRepository.findById(childPostId).orElseThrow(() -> new ResourceNotFoundException("Post", "id", childPostId));
             relatedPosts.add(childPost);
